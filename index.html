@@ -656,7 +656,7 @@ async function generatePDF() {
     doc.line(ML + CW*0.52, y, ML + CW*0.52, y+7);
     doc.setFontSize(8); doc.setFont(undefined,'bold'); doc.setTextColor(26,35,126);
     doc.text(label, ML+2, y+5);
-    doc.setFont(undefined,'normal'); doc.setTextColor(26,35,126);
+    doc.setFont(undefined,'bold'); doc.setTextColor(26,35,126);
     const lines = doc.splitTextToSize(value || '—', CW*0.48 - 4);
     if (lines.length > 1) {
       const h = lines.length * 5 + 3;
@@ -747,11 +747,11 @@ async function generatePDF() {
   const sigBoxW = CW * 0.46;
   const sigX = ML + CW - sigBoxW;
 
-  doc.setDrawColor(180,210,240); doc.setLineWidth(0.5);
+  doc.setDrawColor(255,255,255); doc.setLineWidth(0.5);
   doc.rect(sigX, y, sigBoxW, 34);
-  doc.setFillColor(26,35,126);
+  doc.setFillColor(255,255,255);
   doc.rect(sigX, y, sigBoxW, 7, 'F');
-  doc.setFontSize(8.5); doc.setFont(undefined,'bold'); doc.setTextColor(255,215,0);
+  doc.setFontSize(8.5); doc.setFont(undefined,'bold'); doc.setTextColor(0,0,0);
   doc.text('REPORT MADE BY', sigX + sigBoxW/2, y+5, {align:'center'});
 
   const sig1File = document.getElementById('sigUpload').files[0];
@@ -763,13 +763,13 @@ async function generatePDF() {
     doc.line(sigX+4, y+24, sigX+sigBoxW-4, y+24);
     doc.setFontSize(9); doc.setFont(undefined,'bold'); doc.setTextColor(0,0,0);
     doc.text(getVal('reportMadeBy') || '—', sigX+sigBoxW/2, y+29, {align:'center'});
-    doc.setFontSize(9); doc.setFont(undefined,'normal'); doc.setTextColor(0,0,0);
+    doc.setFontSize(9); doc.setFont(undefined,'bold'); doc.setTextColor(0,0,0);
     doc.text('Date: ' + (getVal('reportDate') || '—'), sigX+sigBoxW/2, y+34, {align:'center'});
 
     // Footer
     doc.setFillColor(26,35,126);
     doc.rect(0, PH-10, PW, 10, 'F');
-    doc.setFontSize(7.5); doc.setFont(undefined,'normal'); doc.setTextColor(255,215,0);
+    doc.setFontSize(7.5); doc.setFont(undefined,'bold'); doc.setTextColor(255,215,0);
     doc.text('Stalling Analysis | Raipur Division, SECR | Generated: '+new Date().toLocaleDateString('en-IN'), PW/2, PH-4, {align:'center'});
 
     doc.save('Stalling_Analysis_'+new Date().toISOString().split('T')[0]+'.pdf');
