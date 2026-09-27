@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,17 +52,73 @@ body{background:linear-gradient(135deg,#87ceeb 0%,#87ceeb 100%);font-family:'Seg
 .sig-preview{margin-top:6px;display:none;text-align:center;}
 .sig-preview img{max-width:180px;max-height:70px;border:2px solid #4a90e2;border-radius:5px;}
 
-/* Buttons */
-.button-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:14px;width:100%;text-align:center;}
-button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-.save-draft-btn{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:white;}
-.save-draft-btn:hover{background:linear-gradient(135deg,#8e44ad,#7d3c98);transform:translateY(-2px);}
-.upload-draft-btn{background:linear-gradient(135deg,#16a085,#138d75);color:white;}
-.upload-draft-btn:hover{background:linear-gradient(135deg,#138d75,#117a65);transform:translateY(-2px);}
-.pdf-btn{background:linear-gradient(135deg,#e67e22,#d35400);color:white;}
-.pdf-btn:hover{background:linear-gradient(135deg,#d35400,#ba4a00);transform:translateY(-2px);}
-.clear-btn{background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;}
-.clear-btn:hover{background:linear-gradient(135deg,#c0392b,#a93226);transform:translateY(-2px);}
+/* Buttons — rounded pill style matching supplied reference, with click effect */
+.button-group{display:flex;gap:10px;justify-content:stretch;flex-wrap:wrap;margin-top:16px;width:100%;text-align:center;}
+button{position:relative;overflow:hidden;flex:1 1 0;padding:8px 8px;font-size:0.72em;font-weight:bold;border:2px solid rgba(0,0,0,0.25);border-radius:4px;cursor:pointer;transition:filter 0.15s,transform 0.1s,box-shadow 0.15s;text-transform:uppercase;letter-spacing:0.5px;color:white;box-shadow:inset 0 1px 0 rgba(255,255,255,0.4),inset 0 -3px 4px rgba(0,0,0,0.25),0 3px 6px rgba(0,0,0,0.35);}
+button:active{box-shadow:inset 0 2px 4px rgba(0,0,0,0.3);transform:translateY(1px);}
+button:hover{filter:brightness(1.1);box-shadow:0 5px 12px rgba(0,0,0,0.32),inset 0 -3px 0 rgba(0,0,0,0.2);}
+button:active{transform:scale(0.94) translateY(1px);box-shadow:0 1px 3px rgba(0,0,0,0.3),inset 0 2px 4px rgba(0,0,0,0.3);filter:brightness(0.95);}
+button .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.55);transform:scale(0);animation:rippleAnim 0.5s ease-out;pointer-events:none;}
+@keyframes rippleAnim{to{transform:scale(2.8);opacity:0;}}
+.pdf-btn{background:#1a3c8c;}
+.save-draft-btn{background:#27ae60;}
+.upload-draft-btn{background:#2d7dd2;}
+.clear-btn{background:#e0303d;}
+.submit-btn{background:#1e8e3e;}
+.photo-tab-btn{background:#add8e6;color:#1a237e;border:2px solid #7fb8d4;border-radius:4px;padding:5px 12px;font-size:0.7em;font-weight:bold;letter-spacing:0.5px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6),inset 0 -2px 3px rgba(0,0,0,0.15),0 3px 6px rgba(0,0,0,0.35);position:absolute;right:20px;top:50%;transform:translateY(-50%);z-index:5;}
+.photo-tab-btn:hover{filter:brightness(1.08);}
+.photo-tab-btn:active{box-shadow:inset 0 2px 4px rgba(0,0,0,0.25);transform:translateY(-50%) translateY(1px);}
+
+@media(max-width:768px){
+  .button-group{flex-direction:row;flex-wrap:wrap;}
+  button{flex:1 1 45%;}
+}
+
+/* Success checkmark animation (shown after Submit) */
+.success-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.35);z-index:10000;align-items:center;justify-content:center;}
+.success-overlay.show{display:flex;}
+.success-box{background:white;border-radius:16px;padding:30px 40px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.3);animation:popIn 0.3s ease;}
+@keyframes popIn{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.checkmark-circle-bg{stroke-dasharray:166;stroke-dashoffset:166;stroke-width:4;stroke:#1e8e3e;fill:none;animation:strokeCircle 0.6s cubic-bezier(0.65,0,0.45,1) forwards;}
+.checkmark-check{transform-origin:50% 50%;stroke-dasharray:48;stroke-dashoffset:48;stroke:#1e8e3e;stroke-width:4;fill:none;animation:strokeCheck 0.3s cubic-bezier(0.65,0,0.45,1) 0.6s forwards;}
+@keyframes strokeCircle{100%{stroke-dashoffset:0;}}
+@keyframes strokeCheck{100%{stroke-dashoffset:0;}}
+.success-title{color:#1e8e3e;font-weight:bold;font-size:1.15em;text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+/* CLI Name/HQ + Signature upload row (matches reference styling) */
+.cli-sig-row{display:flex;gap:20px;background:#eaf3fc;border:1px solid #cfe2f5;border-radius:8px;padding:14px 18px;margin-top:14px;flex-wrap:wrap;}
+.cli-sig-col{flex:1 1 190px;text-align:left;}
+.cli-sig-col-date{flex:0 1 140px;text-align:left;}
+.cli-sig-col label{display:block;font-weight:bold;font-size:12.5px;color:#1a237e;margin-bottom:6px;text-transform:none;letter-spacing:0;}
+.cli-sig-col select,.cli-sig-col input[type="file"]{width:100%;padding:8px 10px;border:2px solid #b3d9ff;border-radius:5px;font-size:13px;font-weight:bold;background:white;box-sizing:border-box;}
+.cli-sig-col input[type="date"],.cli-sig-col input[type="text"]{width:100%;padding:8px 10px;border:2px solid #b3d9ff;border-radius:5px;font-size:13px;font-weight:bold;box-sizing:border-box;}
+.cli-sig-row{align-items:flex-start;}
+
+/* Photo Attachments modal */
+.photo-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:20000;align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto;}
+.photo-modal-overlay.show{display:flex;}
+.photo-modal{background:white;border-radius:15px;box-shadow:0 10px 50px rgba(0,0,0,0.4);border:6px solid transparent;background-image:linear-gradient(white,white),linear-gradient(135deg,#5b6ee1,#8a5bd6);background-origin:border-box;background-clip:padding-box,border-box;max-width:900px;width:100%;padding:20px 26px;}
+.photo-modal-head{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #1a237e;padding-bottom:12px;margin-bottom:16px;}
+.photo-modal-head h2{color:#1a237e;font-size:1.3em;letter-spacing:1px;}
+.photo-close-btn{background:#e0303d;color:white;border:2px solid rgba(0,0,0,0.25);border-radius:4px;padding:6px 12px;font-size:0.75em;font-weight:bold;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.4),inset 0 -2px 3px rgba(0,0,0,0.25),0 3px 6px rgba(0,0,0,0.35);}
+.photo-close-btn:hover{filter:brightness(1.1);}
+.photo-close-btn:active{box-shadow:inset 0 2px 4px rgba(0,0,0,0.3);transform:translateY(1px);}
+.photo-set-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.photo-set-tab{background:#eef1f7;color:#1a237e;border:2px solid #b3d9ff;border-radius:3px 3px 0 0;padding:6px 12px;font-weight:bold;font-size:0.72em;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6),0 2px 4px rgba(0,0,0,0.2);}
+.photo-set-tab:active{box-shadow:inset 0 2px 3px rgba(0,0,0,0.2);}
+.photo-set-tab.active{background:#1a237e;color:white;}
+.photo-set-panel{border:1px solid #1a237e;border-radius:0 8px 8px 8px;padding:16px;background:#f7f9fb;min-height:220px;}
+.photo-set-title{background:#e2e2e2;padding:8px 14px;border-radius:5px;font-weight:bold;color:#1a237e;margin-bottom:12px;}
+.add-photos-btn{background:#1a237e;color:white;border:2px solid rgba(0,0,0,0.25);border-radius:4px;padding:6px 12px;font-size:0.75em;font-weight:bold;cursor:pointer;margin-right:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -2px 3px rgba(0,0,0,0.25),0 3px 6px rgba(0,0,0,0.35);}
+.add-photos-btn:hover{filter:brightness(1.15);}
+.add-photos-btn:active{box-shadow:inset 0 2px 4px rgba(0,0,0,0.3);transform:translateY(1px);}
+.photo-hint{font-size:0.8em;color:#555;}
+.photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px;}
+.photo-thumb{position:relative;border:2px solid #b3d9ff;border-radius:6px;overflow:hidden;aspect-ratio:4/3;background:white;}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;}
+.photo-thumb .remove-photo{position:absolute;top:4px;right:4px;background:#e0303d;color:white;border:1px solid rgba(0,0,0,0.25);border-radius:3px;width:18px;height:18px;font-size:10px;cursor:pointer;line-height:1;box-shadow:inset 0 1px 0 rgba(255,255,255,0.4),inset 0 -1px 2px rgba(0,0,0,0.25),0 2px 4px rgba(0,0,0,0.3);}
+.photo-thumb .remove-photo:active{box-shadow:inset 0 1px 2px rgba(0,0,0,0.3);}
+.photo-empty{text-align:center;color:#888;padding:40px 0;}
 
 /* Message */
 .message{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;padding:18px 32px;border-radius:12px;text-align:center;font-weight:bold;font-size:1.05em;box-shadow:0 8px 32px rgba(0,0,0,0.25);min-width:280px;max-width:480px;}
@@ -91,6 +148,7 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
       <h1>Stalling Analysis Report</h1>
       <h2>Raipur Division</h2>
     </div>
+    <button type="button" class="photo-tab-btn" onclick="openPhotoModal()">📷 Photo Attachments</button>
   </div>
 
   <div class="form-container">
@@ -346,23 +404,26 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
         </div>
       </div>
 
-      <!-- ── SIGNATURE ── -->
-      <div class="sig-row">
-        <div class="sig-box">
-          <h4>Report Made By</h4>
-          <label>Name / Designation:</label>
+      <!-- ── DATE + CLI NAME/HQ + SIGNATURE (styled per reference) ── -->
+      <div class="cli-sig-row">
+        <div class="cli-sig-col cli-sig-col-date">
+          <label>Date:</label>
+          <input type="date" id="reportDate">
+        </div>
+        <div class="cli-sig-col">
+          <label>CLI Name and HQ:</label>
           <select id="reportMadeBy" onchange="handleReportMadeByChange(this)">
             <option value="">-- Select Name --</option>
             <option value="A K REDDY/CLI/R">A K REDDY/CLI/R</option>
             <option value="A.R. TARAM/CLI/BIA">A.R. TARAM/CLI/BIA</option>
             <option value="ABDUL MOIN KHAN/CLI/BIA">ABDUL MOIN KHAN/CLI/BIA</option>
             <option value="AKHILESH KUMAR/CLI/BIA">AKHILESH KUMAR/CLI/BIA</option>
-            <option value="AMIT KUMAR BANKURE/CLI/BYT">AMIT KUMAR BANKURE/CLI/BYT</option>
+            <option value="AMIT KUMAR BANKURE/CLI/BIA">AMIT KUMAR BANKURE/CLI/BIA</option>
             <option value="ANANT PRAKASH SHRIVASTAVA/CLI/BIA">ANANT PRAKASH SHRIVASTAVA/CLI/BIA</option>
             <option value="ANIL KUMAR/CLI/BIA">ANIL KUMAR/CLI/BIA</option>
             <option value="ANKIT RAM KANT/CLI/BIA">ANKIT RAM KANT/CLI/BIA</option>
+            <option value="ASHISH WANJARI/CLI/BIA">ASHISH WANJARI/CLI/BIA</option>
             <option value="AVON KUMAR SAHU/CLI/R">AVON KUMAR SAHU/CLI/R</option>
-            <option value="ASHISH WANJARI/CLI/BYT">ASHISH WANJARI/CLI/BYT</option>
             <option value="B B KUSHWAHA/CLI/BIA">B B KUSHWAHA/CLI/BIA</option>
             <option value="B K HARMUKH/CLI/BIA">B K HARMUKH/CLI/BIA</option>
             <option value="B. K. SAHA/CLI/BIA">B. K. SAHA/CLI/BIA</option>
@@ -374,10 +435,10 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
             <option value="BIKRAMJIT KANRAR/CLI/BIA">BIKRAMJIT KANRAR/CLI/BIA</option>
             <option value="BINOD KUMAR RAM/CLI/R">BINOD KUMAR RAM/CLI/R</option>
             <option value="BRIJESH YADAV/CLI/BYT">BRIJESH YADAV/CLI/BYT</option>
-            <option value="DEEPANNITA PUNTAMBEKAR/CLI/BIA">DEEPANNITA PUNTAMBEKAR/CLI/BIA</option>
             <option value="DEEPAK KUMAR SWARNAKAR/CLI/BYT">DEEPAK KUMAR SWARNAKAR/CLI/BYT</option>
+            <option value="DEEPANNITA PUNTAMBEKAR/CLI/BIA">DEEPANNITA PUNTAMBEKAR/CLI/BIA</option>
             <option value="DHANESH KUMAR/CLI/BYT">DHANESH KUMAR/CLI/BYT</option>
-            <option value="DILLI RAO/CLI/BYT">DILLI RAO/CLI/BYT</option>
+            <option value="DILLI RAO/CLI/BIA">DILLI RAO/CLI/BIA</option>
             <option value="G. C. BISWAS/CLI/R">G. C. BISWAS/CLI/R</option>
             <option value="G. V. R. K. MADHU/CLI/BIA">G. V. R. K. MADHU/CLI/BIA</option>
             <option value="GHANA RAM SAHU/CLI/BIA">GHANA RAM SAHU/CLI/BIA</option>
@@ -385,53 +446,60 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
             <option value="GIRISH KUMAR VERMA/CLI/BYT">GIRISH KUMAR VERMA/CLI/BYT</option>
             <option value="HARESH SHRAWAN/CLI/BIA">HARESH SHRAWAN/CLI/BIA</option>
             <option value="JAISHANKAR SHARMA/CLI/BIA">JAISHANKAR SHARMA/CLI/BIA</option>
-            <option value="JITENDRA KUMAR MISHRA/CLI/BYT">JITENDRA KUMAR MISHRA/CLI/BYT</option>
+            <option value="JITENDRA KUMAR MISHRA/CLI/BIA">JITENDRA KUMAR MISHRA/CLI/BIA</option>
+            <option value="K P HIRWANI/CLI/BIA">K P HIRWANI/CLI/BIA</option>
             <option value="K P LAHARE/CLI/R">K P LAHARE/CLI/R</option>
-            <option value="K P HIRWANI/CLI/BYT">K P HIRWANI/CLI/BYT</option>
             <option value="K. K. SAHU/CLI/BIA">K. K. SAHU/CLI/BIA</option>
-            <option value="KHUSAL SINGH/CLI/DRZ">KHUSAL SINGH/CLI/DRZ</option>
+            <option value="KAMLESH KUMAR RAJABHOJ/CLI/BIA">KAMLESH KUMAR RAJABHOJ/CLI/BIA</option>
+            <option value="KHUSHAL SINGH/CLI/DRZ">KHUSHAL SINGH/CLI/DRZ</option>
+            <option value="M R SAHU/CLI/DRZ">M R SAHU/CLI/DRZ</option>
             <option value="MAHESHWAR/CLI/BIA">MAHESHWAR/CLI/BIA</option>
-            <option value="MANOJ KUMAR SAO/CLI/R">MANOJ KUMAR SAO/CLI/R</option>
+            <option value="MANOJ KUMAR SAO/CLI/BIA">MANOJ KUMAR SAO/CLI/BIA</option>
             <option value="MANSUKH LAL CHANDRAKAR/CLI/R">MANSUKH LAL CHANDRAKAR/CLI/R</option>
             <option value="MOHIT KUMAR SWARNKAR/CLI/BIA">MOHIT KUMAR SWARNKAR/CLI/BIA</option>
+            <option value="MUKESH LACHWANI/CLI/BIA">MUKESH LACHWANI/CLI/BIA</option>
             <option value="N. R. KARPAL/CLI/BIA">N. R. KARPAL/CLI/BIA</option>
             <option value="N.K. BHOI/CLI/R">N.K. BHOI/CLI/R</option>
             <option value="NEELKANTH DEWANGAN/CLI/BIA">NEELKANTH DEWANGAN/CLI/BIA</option>
             <option value="NEELMANI SAHU/CLI/BYT">NEELMANI SAHU/CLI/BYT</option>
-            <option value="NITIN KUKDE/CLI/BYT">NITIN KUKDE/CLI/BYT</option>
-            <option value="NIRMAL KUMAR/CLI/BYT">NIRMAL KUMAR/CLI/BYT</option>
+            <option value="NIRMAL KUMAR/CLI/BIA">NIRMAL KUMAR/CLI/BIA</option>
+            <option value="NITIN KUKDE/CLI/BIA">NITIN KUKDE/CLI/BIA</option>
             <option value="P.K. PATEL/CLI/BIA">P.K. PATEL/CLI/BIA</option>
+            <option value="PALAK RAM ALENDRA/CLI/DRZ">PALAK RAM ALENDRA/CLI/DRZ</option>
             <option value="PANKAJ KUMAR SINGH/CLI/BIA">PANKAJ KUMAR SINGH/CLI/BIA</option>
             <option value="PAWAN KUMAR SINGH/CLI/BIA">PAWAN KUMAR SINGH/CLI/BIA</option>
-            <option value="PURAN LAL PATEL/CLI/BYT">PURAN LAL PATEL/CLI/BYT</option>
+            <option value="PURAN LAL PATEL/CLI/BIA">PURAN LAL PATEL/CLI/BIA</option>
             <option value="PYARELAL SONWANI/CLI/BYT">PYARELAL SONWANI/CLI/BYT</option>
             <option value="RAJENDRA KUMAR/CLI/BIA">RAJENDRA KUMAR/CLI/BIA</option>
-            <option value="PALAK RAM ALENDRA/CLI/DRZ">PALAK RAM ALENDRA/CLI/DRZ</option>
+            <option value="RAJENDRA SINGH/CLI/BIA">RAJENDRA SINGH/CLI/BIA</option>
             <option value="RAJESH KUMAR DESHMUKH/CLI/R">RAJESH KUMAR DESHMUKH/CLI/R</option>
             <option value="RAJNEESH BENERJEE/CLI/BIA">RAJNEESH BENERJEE/CLI/BIA</option>
             <option value="RAJPUT MUKESH KUMAR/CLI/BIA">RAJPUT MUKESH KUMAR/CLI/BIA</option>
-            <option value="RAM KISHOR YADAV/CLI/BYT">RAM KISHOR YADAV/CLI/BYT</option>
-            <option value="RANJEET SINGH/CLI/BYT">RANJEET SINGH/CLI/BYT</option>
             <option value="RAKESH KUMAR KOSTA/CLI/DRZ">RAKESH KUMAR KOSTA/CLI/DRZ</option>
+            <option value="RAM KISHOR YADAV/CLI/BYT">RAM KISHOR YADAV/CLI/BYT</option>
+            <option value="RANJEET SINGH/CLI/BIA">RANJEET SINGH/CLI/BIA</option>
             <option value="S K GAUTAM/CLI/BIA">S K GAUTAM/CLI/BIA</option>
             <option value="S S HUSSAIN/CLI/BIA">S S HUSSAIN/CLI/BIA</option>
             <option value="S. C. RAI/CLI/BIA">S. C. RAI/CLI/BIA</option>
             <option value="S. K. SINGH/CLI/BIA">S. K. SINGH/CLI/BIA</option>
             <option value="S. L. SONI/CLI/R">S. L. SONI/CLI/R</option>
+            <option value="SANAT KUMAR SAHU/CLI/DRZ">SANAT KUMAR SAHU/CLI/DRZ</option>
             <option value="SANDEEP PATIL/CLI/BYT">SANDEEP PATIL/CLI/BYT</option>
             <option value="SANJAY KUMAR ROY/CLI/BIA">SANJAY KUMAR ROY/CLI/BIA</option>
             <option value="SANJAY SINGH/CLI/DRZ">SANJAY SINGH/CLI/DRZ</option>
             <option value="SANJEEV KUMAR SHARMA/CLI/BIA">SANJEEV KUMAR SHARMA/CLI/BIA</option>
             <option value="SANTOSH KUAMAR PATKAR/CLI/BIA">SANTOSH KUAMAR PATKAR/CLI/BIA</option>
+            <option value="SATISH KUMAR DEWANGAN/CLI/BYT(R0061)">SATISH KUMAR DEWANGAN/CLI/BYT(R0061)</option>
+            <option value="SATYENDRA KUMAR/CLI/DRZ">SATYENDRA KUMAR/CLI/DRZ</option>
             <option value="SHAILENDRA SINGH/CLI/BIA">SHAILENDRA SINGH/CLI/BIA</option>
             <option value="SUNDEEP KUMAR SHARMA/CLI/BIA">SUNDEEP KUMAR SHARMA/CLI/BIA</option>
             <option value="SUNEET KUMAR/CLI/BYT">SUNEET KUMAR/CLI/BYT</option>
             <option value="SUNIL KUMAR DEWANGAN/CLI/BIA">SUNIL KUMAR DEWANGAN/CLI/BIA</option>
-            <option value="SANAT KUMAR SAHU/CLI/DRZ">SANAT KUMAR SAHU/CLI/DRZ</option>
+            <option value="SURENDRA KUMAR SONI/CLI/BYT">SURENDRA KUMAR SONI/CLI/BYT</option>
             <option value="V.K. BHAGAT/CLI/R">V.K. BHAGAT/CLI/R</option>
             <option value="VIJAY KUMAR ARYA/CLI/BIA">VIJAY KUMAR ARYA/CLI/BIA</option>
             <option value="VIJAY RAM/CLI/BYT">VIJAY RAM/CLI/BYT</option>
-            <option value="VIKAS SHENDE/CLI/BIA">VIKAS SHENDE/CLI/BIA</option>
+            <option value="VIKAS SHENDE/CLI/R">VIKAS SHENDE/CLI/R</option>
             <option value="VINAY KUMAR VINCHURE/CLI/BIA">VINAY KUMAR VINCHURE/CLI/BIA</option>
             <option value="VINAY PANTAWANE/CLI/BIA">VINAY PANTAWANE/CLI/BIA</option>
             <option value="Y. RAMU/CLI/BIA">Y. RAMU/CLI/BIA</option>
@@ -442,9 +510,9 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
             <label style="display:block;font-weight:bold;font-size:12px;color:#c0392b;margin-bottom:4px;">&#9998; Enter Name / Designation (not in list above):</label>
             <input type="text" id="reportMadeByOther" placeholder="TYPE NAME / DESIGNATION HERE" style="width:100%;padding:7px 10px;border:2px solid #e74c3c;border-radius:5px;font-size:13px;font-weight:bold;background:#fff8f8;">
           </div>
-          <label>Date:</label>
-          <input type="date" id="reportDate">
-          <label>Signature (Upload):</label>
+        </div>
+        <div class="cli-sig-col">
+          <label>Upload Signature:</label>
           <input type="file" id="sigUpload" accept="image/*" onchange="previewSig(this)">
           <div class="sig-preview" id="sigPreview">
             <img id="sigImg" src="" alt="Signature Preview">
@@ -454,12 +522,35 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
 
       <!-- ── BUTTONS ── -->
       <div class="button-group">
-        <button class="save-draft-btn" onclick="saveDraft()">💾 Save Draft</button>
+        <button class="pdf-btn" onclick="generatePDF()">📄 PDF</button>
+        <button class="save-draft-btn" onclick="saveDraft()">💾 Download Draft</button>
         <input type="file" id="draftFileInput" accept=".json" style="display:none" onchange="loadDraftFromFile(this)">
-        <button class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()">📂 Load Draft</button>
-        <button class="pdf-btn" onclick="generatePDF()">📄 Download PDF</button>
-        <button class="clear-btn" onclick="clearForm()">🗑️ Clear Form</button>
+        <button class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()">📤 Upload Draft</button>
+        <button class="clear-btn" onclick="clearForm()">🔄 Reset</button>
+        <button class="submit-btn" id="submitBtn" onclick="submitForm()">✅ Submit</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Photo Attachments Modal -->
+<div class="photo-modal-overlay" id="photoModalOverlay">
+  <div class="photo-modal">
+    <div class="photo-modal-head">
+      <h2>📷 PHOTO ATTACHMENTS</h2>
+      <button type="button" class="photo-close-btn" onclick="closePhotoModal()">✕ Close &amp; Return</button>
+    </div>
+    <div class="photo-set-tabs" id="photoSetTabs">
+      <button type="button" class="photo-set-tab active" data-set="1" onclick="switchPhotoSet(1)">Photo Set 1</button>
+      <button type="button" class="photo-set-tab" data-set="2" onclick="switchPhotoSet(2)">Photo Set 2</button>
+      <button type="button" class="photo-set-tab" data-set="3" onclick="switchPhotoSet(3)">Photo Set 3</button>
+    </div>
+    <div class="photo-set-panel">
+      <div class="photo-set-title" id="photoSetTitle">PHOTO SET 1</div>
+      <button type="button" class="add-photos-btn" onclick="document.getElementById('photoFileInput').click()">+ Add Photos</button>
+      <span class="photo-hint">Select images — 6 per PDF page, 3 rows × 2 columns</span>
+      <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none" onchange="addPhotos(this)">
+      <div class="photo-grid" id="photoGrid"></div>
     </div>
   </div>
 </div>
@@ -468,7 +559,83 @@ button{padding:11px 26px;font-size:0.95em;font-weight:bold;border:none;border-ra
 <div class="message-overlay" id="msgOverlay"></div>
 <div class="message" id="msgBox"></div>
 
+<!-- Success animation shown after Submit -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <svg class="checkmark-circle-bg" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="24"/>
+    </svg>
+    <svg class="checkmark-check" style="margin-top:-84px;" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 52 52">
+      <path d="M14 27l7 7 17-17"/>
+    </svg>
+    <div class="success-title">Report Submitted</div>
+  </div>
+</div>
+
 <script>
+// Ripple click effect for all buttons
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const ripple = document.createElement('span');
+  const size = Math.max(rect.width, rect.height);
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+  ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+  btn.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 500);
+});
+
+// ---- Photo Attachments ----
+const photoSets = {1: [], 2: [], 3: []};
+let activePhotoSet = 1;
+
+function openPhotoModal() {
+  document.getElementById('photoModalOverlay').classList.add('show');
+  renderPhotoGrid();
+}
+function closePhotoModal() {
+  document.getElementById('photoModalOverlay').classList.remove('show');
+}
+function switchPhotoSet(setNum) {
+  activePhotoSet = setNum;
+  document.querySelectorAll('.photo-set-tab').forEach(t => t.classList.toggle('active', +t.dataset.set === setNum));
+  document.getElementById('photoSetTitle').textContent = 'PHOTO SET ' + setNum;
+  renderPhotoGrid();
+}
+function addPhotos(input) {
+  const files = Array.from(input.files || []);
+  let remaining = 6 - photoSets[activePhotoSet].length;
+  files.slice(0, Math.max(remaining, 0)).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      photoSets[activePhotoSet].push(e.target.result);
+      renderPhotoGrid();
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+function removePhoto(setNum, idx) {
+  photoSets[setNum].splice(idx, 1);
+  renderPhotoGrid();
+}
+function renderPhotoGrid() {
+  const grid = document.getElementById('photoGrid');
+  const photos = photoSets[activePhotoSet];
+  if (!photos.length) {
+    grid.innerHTML = '<div class="photo-empty" style="grid-column:1/-1;">No photos attached yet. Click "+ Add Photos" above.</div>';
+    return;
+  }
+  grid.innerHTML = photos.map((src, i) => `
+    <div class="photo-thumb">
+      <img src="${src}" alt="Photo ${i+1}">
+      <button type="button" class="remove-photo" onclick="removePhoto(${activePhotoSet}, ${i})">✕</button>
+    </div>`).join('');
+}
+
 // Handle OTHERS selection in reportMadeBy
 function handleReportMadeByChange(sel) {
   const wrapper = document.getElementById('reportMadeByOtherWrapper');
@@ -518,6 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('reportDate').value = today;
   autoLoadDraft();
   initAutoSave();
+  setSubmitButtonMode(!!getSubmitBaseline());
 });
 
 function getVal(id) {
@@ -538,6 +706,93 @@ function showMessage(msg, type) {
   overlay.style.display = 'block';
   box.style.display = 'block';
   setTimeout(() => { overlay.style.display='none'; box.style.display='none'; }, 3000);
+}
+
+function showSuccessAnimation(titleText) {
+  const overlay = document.getElementById('successOverlay');
+  const titleEl = overlay.querySelector('.success-title');
+  if (titleEl) titleEl.textContent = titleText || 'Report Submitted';
+  overlay.classList.add('show');
+  setTimeout(() => { overlay.classList.remove('show'); }, 2200);
+}
+
+// ── SUBMIT / SUBMIT CORRECTION LOGIC ──
+// First click: saves a full baseline snapshot and switches the button to
+// "Submit Correction" mode. Every click after that only saves/downloads
+// the fields whose values changed since the last submission.
+const SUBMIT_BASELINE_KEY = 'stallingSubmitBaseline';
+
+function getCurrentFormData() {
+  const data = {};
+  FIELDS.forEach(id => { data[id] = getVal(id); });
+  const otherEl = document.getElementById('reportMadeByOther');
+  if (otherEl) data['reportMadeByOther'] = otherEl.value.trim();
+  return data;
+}
+
+function getSubmitBaseline() {
+  try {
+    const raw = localStorage.getItem(SUBMIT_BASELINE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function setSubmitButtonMode(hasBaseline) {
+  const btn = document.getElementById('submitBtn');
+  if (!btn) return;
+  btn.textContent = hasBaseline ? '✏️ Submit Correction' : '✅ Submit';
+}
+
+function submitForm() {
+  // Basic sanity check before "submitting"
+  const reportBy = document.getElementById('reportMadeBy').value;
+  if (!reportBy) {
+    showMessage('Please select CLI Name and HQ before submitting.', 'error');
+    return;
+  }
+
+  const currentData = getCurrentFormData();
+  const baseline = getSubmitBaseline();
+
+  if (!baseline) {
+    // First submission: store the full snapshot as the baseline.
+    localStorage.setItem(SUBMIT_BASELINE_KEY, JSON.stringify(currentData));
+    setSubmitButtonMode(true);
+    showSuccessAnimation('Report Submitted');
+    return;
+  }
+
+  // Subsequent submissions: only the fields that changed since the
+  // last submission are treated as "new" data.
+  const changedFields = {};
+  Object.keys(currentData).forEach(key => {
+    if (currentData[key] !== baseline[key]) {
+      changedFields[key] = currentData[key];
+    }
+  });
+
+  if (Object.keys(changedFields).length === 0) {
+    showMessage('No new changes to submit.', 'error');
+    return;
+  }
+
+  // Save only the newly entered/changed data as a downloadable JSON file.
+  const correctionPayload = {
+    correctionOf: currentData['reportDate'] || currentData['date'] || '',
+    submittedAt: new Date().toISOString(),
+    changedFields: changedFields
+  };
+  const blob = new Blob([JSON.stringify(correctionPayload, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'StallCorrection_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+
+  // Update the baseline to the full current state so the next correction
+  // only captures whatever changes next.
+  localStorage.setItem(SUBMIT_BASELINE_KEY, JSON.stringify(currentData));
+  setSubmitButtonMode(true);
+  showSuccessAnimation('Correction Submitted');
 }
 
 function previewSig(input) {
@@ -647,6 +902,8 @@ function clearForm() {
     if (el) el.value = '';
   });
   localStorage.removeItem('stallingDraft');
+  localStorage.removeItem(SUBMIT_BASELINE_KEY);
+  setSubmitButtonMode(false);
   showMessage('Form cleared.', 'success');
 }
 
@@ -836,6 +1093,30 @@ async function generatePDF() {
     doc.rect(0, PH-10, PW, 10, 'F');
     doc.setFontSize(7.5); doc.setFont(undefined,'bold'); doc.setTextColor(255,215,0);
     doc.text('Stalling Analysis | Raipur Division, SECR | Generated: '+new Date().toLocaleDateString('en-IN'), PW/2, PH-4, {align:'center'});
+
+    // Photo Attachment pages — 6 photos per page, 3 rows x 2 columns
+    [1,2,3].forEach(setNum => {
+      const photos = photoSets[setNum];
+      if (!photos.length) return;
+      doc.addPage();
+      doc.setFillColor(26,35,126);
+      doc.rect(0, 0, PW, 10, 'F');
+      doc.setFontSize(11); doc.setFont(undefined,'bold'); doc.setTextColor(255,215,0);
+      doc.text('PHOTO ATTACHMENTS — SET ' + setNum, PW/2, 7, {align:'center'});
+      const cols = 2, rows = 3, gap = 6;
+      const cellW = (CW - gap) / cols;
+      const cellH = (PH - 20 - MT - gap*(rows-1)) / rows;
+      photos.slice(0, 6).forEach((src, i) => {
+        const col = i % cols, row = Math.floor(i / cols);
+        const px = ML + col * (cellW + gap);
+        const py = MT + 4 + row * (cellH + gap);
+        try { doc.addImage(src, 'JPEG', px, py, cellW, cellH); } catch(e) {
+          try { doc.addImage(src, 'PNG', px, py, cellW, cellH); } catch(e2) {}
+        }
+        doc.setDrawColor(26,35,126); doc.setLineWidth(0.3);
+        doc.rect(px, py, cellW, cellH);
+      });
+    });
 
     doc.save('Stalling_Analysis_'+new Date().toISOString().split('T')[0]+'.pdf');
     showMessage('PDF generated and downloaded successfully!', 'success');
