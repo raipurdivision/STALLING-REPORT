@@ -138,6 +138,69 @@ button .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0
   .button-group{flex-direction:column;}
   button{width:100%;}
 }
+
+.lbl-m{display:none;}
+.lbl-all{display:inline;}
+button:disabled{opacity:0.65;cursor:not-allowed;}
+/* ===== SAVING OVERLAY ===== */
+.saving-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:30000;align-items:center;justify-content:center;padding:16px;}
+.saving-overlay.show{display:flex;}
+.saving-box{background:#fff;border-radius:20px;padding:30px 24px 24px;text-align:center;max-width:360px;width:100%;box-shadow:0 12px 44px rgba(0,0,0,0.4);animation:popIn 0.25s ease;}
+.saving-ring{position:relative;width:96px;height:96px;margin:0 auto 18px;}
+.saving-ring::before{content:"";position:absolute;inset:0;border-radius:50%;border:8px solid #dff3e4;}
+.saving-ring::after{content:"";position:absolute;inset:0;border-radius:50%;border:8px solid transparent;border-bottom-color:#1aa04a;border-left-color:#1aa04a;animation:spinRing 1s linear infinite;}
+.saving-ring span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;animation:waveHand 1.2s ease-in-out infinite;}
+@keyframes spinRing{to{transform:rotate(360deg);}}
+@keyframes waveHand{0%,100%{transform:rotate(-12deg);}50%{transform:rotate(14deg);}}
+.saving-title{color:#1aa04a;font-weight:800;font-size:1.15em;text-transform:uppercase;letter-spacing:0.5px;}
+.saving-sub{color:#157a39;font-weight:700;margin-top:8px;font-size:0.95em;}
+
+/* ===== PDF READY MODAL ===== */
+.pdf-ready-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:30000;align-items:center;justify-content:center;padding:16px;}
+.pdf-ready-overlay.show{display:flex;}
+.pdf-ready-box{background:#fff;border-radius:28px;padding:30px 22px 24px;width:100%;max-width:400px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,0.4);animation:popIn 0.25s ease;}
+.pdf-ready-title{color:#1aa04a;font-size:1.7em;font-weight:800;margin-bottom:8px;}
+.pdf-ready-text{color:#333;font-size:1.05em;margin-bottom:20px;line-height:1.35;}
+.pdf-ready-box .pr-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px 10px;margin-bottom:12px;border:none;border-radius:20px;font-size:1.1em;font-weight:700;text-decoration:none;cursor:pointer;text-transform:none;letter-spacing:0;}
+.pdf-ready-box .pr-btn:last-child{margin-bottom:0;}
+.pdf-ready-box .pr-download{background:#1aa04a;color:#fff;box-shadow:0 3px 8px rgba(26,160,74,0.4);}
+.pdf-ready-box .pr-secondary{background:#efefef;color:#333;text-transform:uppercase;letter-spacing:1.5px;box-shadow:0 3px 8px rgba(0,0,0,0.15);}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  body{padding:8px 8px 110px;}
+  .container{border-radius:10px;}
+  .header{flex-direction:column;padding:10px 12px;gap:8px;}
+  .header-logo{position:static;transform:none;height:56px;width:56px;}
+  .header h1{font-size:1.15em;letter-spacing:1px;}
+  .header h2{font-size:0.85em;}
+  .photo-tab-btn{position:static;transform:none;width:100%;flex:none;padding:9px 12px;font-size:0.8em;}
+  .photo-tab-btn:active{transform:scale(0.97);}
+  .form-container{padding:8px;}
+  .info-section{padding:10px;}
+  .form-label{font-size:13px;}
+  .form-value input,.form-value select,.form-value textarea{font-size:16px;padding:8px 10px;}
+  .form-value textarea{min-height:90px;width:100%;resize:none;}
+  .cli-sig-row{padding:10px;gap:12px;}
+  .cli-sig-col,.cli-sig-col-date{flex:1 1 100%;}
+  .photo-grid{grid-template-columns:repeat(2,1fr);}
+  /* Bottom nav bar (mobile only) */
+  .button-group{position:fixed;left:0;right:0;bottom:0;z-index:9000;margin:0;width:100%;flex-direction:row;flex-wrap:nowrap;justify-content:stretch;gap:6px;background:#0b1220;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(0,0,0,0.35);}
+  .button-group button{flex:1 1 0;width:auto;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:9px 1px 7px;background:#161f2e;color:#e8edf5;border:none;border-bottom:4px solid var(--c);border-radius:10px;font-size:9.5px;font-weight:700;letter-spacing:0.3px;line-height:1.1;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.5);}
+  .button-group button .ni{font-size:17px;line-height:1;}
+  .button-group button .lbl-d{display:none;}
+  .button-group button .lbl-m{display:inline;}
+  .button-group .save-draft-btn{order:1;--c:#8b3dff;}
+  .button-group .upload-draft-btn{order:2;--c:#0fa88a;}
+  .button-group .submit-btn{order:3;--c:#2f7de1;}
+  .button-group .pdf-btn{order:4;--c:#f08a1c;}
+  .button-group .clear-btn{order:5;--c:#e0303d;}
+  .button-group button:hover{filter:brightness(1.25);}
+  .button-group button:disabled,.button-group button.is-done{background:#3b4656;color:#9aa7b8;--c:#4d6a8f;cursor:not-allowed;filter:none;box-shadow:none;}
+  .button-group button.is-saving{opacity:0.75;pointer-events:none;}
+  .form-value textarea{overflow:hidden;}
+  #autoSaveIndicator{bottom:88px !important;}
+}
 </style>
 </head>
 <body>
@@ -522,12 +585,12 @@ button .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0
 
       <!-- ── BUTTONS ── -->
       <div class="button-group">
-        <button class="pdf-btn" onclick="generatePDF()">📄 PDF</button>
-        <button class="save-draft-btn" onclick="saveDraft()">💾 Download Draft</button>
+        <button type="button" class="pdf-btn" onclick="generatePDF()"><span class="ni">📄</span> <span class="lbl-d">PDF</span><span class="lbl-m">Generate PDF</span></button>
+        <button type="button" class="save-draft-btn" onclick="saveDraft()"><span class="ni">💾</span> <span class="lbl-d">Download Draft</span><span class="lbl-m">Save Draft</span></button>
         <input type="file" id="draftFileInput" accept=".json" style="display:none" onchange="loadDraftFromFile(this)">
-        <button class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()">📤 Upload Draft</button>
-        <button class="clear-btn" onclick="clearForm()">🔄 Reset</button>
-        <button class="submit-btn" id="submitBtn" onclick="submitForm()">✅ Submit</button>
+        <button type="button" class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()"><span class="ni">📤</span> <span class="lbl-d">Upload Draft</span><span class="lbl-m">Upload Draft</span></button>
+        <button type="button" class="clear-btn" onclick="clearForm()"><span class="ni">🔄</span> <span class="lbl-d">Reset</span><span class="lbl-m">Reset</span></button>
+        <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()"><span class="ni" id="submitIcon">✅</span> <span id="submitLabel" class="lbl-all">Submit</span></button>
       </div>
     </div>
   </div>
@@ -552,6 +615,27 @@ button .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0
       <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none" onchange="addPhotos(this)">
       <div class="photo-grid" id="photoGrid"></div>
     </div>
+  </div>
+</div>
+
+
+<!-- Saving animation -->
+<div class="saving-overlay" id="savingOverlay">
+  <div class="saving-box">
+    <div class="saving-ring"><span>✋</span></div>
+    <div class="saving-title">⏳ Please wait — data saving...</div>
+    <div class="saving-sub">Do not close or refresh this page</div>
+  </div>
+</div>
+
+<!-- PDF ready modal -->
+<div class="pdf-ready-overlay" id="pdfReadyOverlay">
+  <div class="pdf-ready-box">
+    <div class="pdf-ready-title">📄 PDF ready</div>
+    <div class="pdf-ready-text">If the download did not start, tap the button below.</div>
+    <a class="pr-btn pr-download" id="pdfDownloadLink" href="#" download="report.pdf">⬇️ Download PDF</a>
+    <button type="button" class="pr-btn pr-secondary" onclick="sharePdf()">📤 Share / Save PDF</button>
+    <button type="button" class="pr-btn pr-secondary" onclick="closePdfModal()">Close</button>
   </div>
 </div>
 
@@ -669,6 +753,8 @@ function loadDraftFromFile(input) {
         const sel = document.getElementById('reportMadeBy');
         if (sel) sel.value = 'OTHERS';
       }
+      growAllTextareas();
+      refreshSubmitState();
       showMessage('Draft loaded successfully!', 'success');
     } catch(err) {
       showMessage('Error loading draft file. Please use a valid JSON file.', 'error');
@@ -678,6 +764,56 @@ function loadDraftFromFile(input) {
   reader.readAsText(file);
 }
 
+
+// ---- Textareas: auto-grow so full text is always visible ----
+function growTextarea(el) {
+  el.style.height = '';
+  if (window.matchMedia('(max-width:768px)').matches) {
+    el.style.height = 'auto';
+    el.style.height = (el.scrollHeight + 2) + 'px';
+  }
+}
+function growAllTextareas() {
+  document.querySelectorAll('.form-value textarea').forEach(growTextarea);
+}
+document.addEventListener('input', function(e) {
+  if (e.target.matches && e.target.matches('textarea')) growTextarea(e.target);
+  if (e.target.closest && e.target.closest('.info-section')) refreshSubmitState();
+});
+document.addEventListener('change', function(e) {
+  if (e.target.closest && e.target.closest('.info-section')) refreshSubmitState();
+});
+window.addEventListener('resize', growAllTextareas);
+window.addEventListener('load', growAllTextareas);
+
+// ---- PDF ready modal ----
+let lastPdfBlob = null, lastPdfName = 'report.pdf', lastPdfUrl = null;
+function showPdfReady(blob, name) {
+  lastPdfBlob = blob; lastPdfName = name;
+  if (lastPdfUrl) URL.revokeObjectURL(lastPdfUrl);
+  lastPdfUrl = URL.createObjectURL(blob);
+  const link = document.getElementById('pdfDownloadLink');
+  link.href = lastPdfUrl; link.download = name;
+  document.getElementById('pdfReadyOverlay').classList.add('show');
+  // try automatic download as well
+  try { link.click(); } catch(e) {}
+}
+function closePdfModal() {
+  document.getElementById('pdfReadyOverlay').classList.remove('show');
+}
+async function sharePdf() {
+  if (!lastPdfBlob) return;
+  const file = new File([lastPdfBlob], lastPdfName, {type: 'application/pdf'});
+  try {
+    if (navigator.canShare && navigator.canShare({files: [file]})) {
+      await navigator.share({files: [file], title: lastPdfName});
+    } else {
+      document.getElementById('pdfDownloadLink').click();
+      showMessage('Sharing not supported here — use Download PDF.', 'error');
+    }
+  } catch (e) { /* user cancelled share */ }
+}
+
 // Set today's date on load
 document.addEventListener('DOMContentLoaded', () => {
   const today = new Date().toISOString().split('T')[0];
@@ -685,7 +821,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('reportDate').value = today;
   autoLoadDraft();
   initAutoSave();
-  setSubmitButtonMode(!!getSubmitBaseline());
+  growAllTextareas();
+  refreshSubmitState();
 });
 
 function getVal(id) {
@@ -737,14 +874,51 @@ function getSubmitBaseline() {
   } catch(e) { return null; }
 }
 
-function setSubmitButtonMode(hasBaseline) {
+let isSaving = false;
+let submitState = 'submit';
+
+// states: submit | correction | saving | submitted
+function setSubmitState(state) {
+  submitState = state;
   const btn = document.getElementById('submitBtn');
+  const label = document.getElementById('submitLabel');
+  const icon = document.getElementById('submitIcon');
   if (!btn) return;
-  btn.textContent = hasBaseline ? '✏️ Submit Correction' : '✅ Submit';
+  btn.classList.remove('is-done','is-saving');
+  btn.disabled = false;
+  if (state === 'submitted') {
+    label.textContent = 'Submitted'; icon.textContent = '✅';
+    btn.classList.add('is-done'); btn.disabled = true;
+  } else if (state === 'saving') {
+    label.textContent = 'Saving...'; icon.textContent = '⏳';
+    btn.classList.add('is-saving');
+  } else if (state === 'correction') {
+    label.textContent = 'Submit Correction'; icon.textContent = '✏️';
+  } else {
+    label.textContent = 'Submit'; icon.textContent = '✅';
+  }
 }
 
+// Called on load and whenever the form is edited
+function refreshSubmitState() {
+  if (isSaving) return;
+  const baseline = getSubmitBaseline();
+  if (!baseline) { setSubmitState('submit'); return; }
+  const cur = getCurrentFormData();
+  const changed = Object.keys(cur).some(k => cur[k] !== baseline[k]);
+  setSubmitState(changed ? 'correction' : 'submitted');
+}
+
+function showSavingOverlay(on) {
+  document.getElementById('savingOverlay').classList.toggle('show', !!on);
+}
+window.addEventListener('beforeunload', function(e) {
+  if (isSaving) { e.preventDefault(); e.returnValue = ''; }
+});
+
 function submitForm() {
-  // Basic sanity check before "submitting"
+  if (isSaving || submitState === 'submitted') return;
+
   const reportBy = document.getElementById('reportMadeBy').value;
   if (!reportBy) {
     showMessage('Please select CLI Name and HQ before submitting.', 'error');
@@ -753,46 +927,57 @@ function submitForm() {
 
   const currentData = getCurrentFormData();
   const baseline = getSubmitBaseline();
+  let changedFields = null;
 
-  if (!baseline) {
-    // First submission: store the full snapshot as the baseline.
-    localStorage.setItem(SUBMIT_BASELINE_KEY, JSON.stringify(currentData));
-    setSubmitButtonMode(true);
-    showSuccessAnimation('Report Submitted');
-    return;
+  if (baseline) {
+    changedFields = {};
+    Object.keys(currentData).forEach(key => {
+      if (currentData[key] !== baseline[key]) changedFields[key] = currentData[key];
+    });
+    if (Object.keys(changedFields).length === 0) {
+      showMessage('No new changes to submit.', 'error');
+      return;
+    }
   }
 
-  // Subsequent submissions: only the fields that changed since the
-  // last submission are treated as "new" data.
-  const changedFields = {};
-  Object.keys(currentData).forEach(key => {
-    if (currentData[key] !== baseline[key]) {
-      changedFields[key] = currentData[key];
-    }
+  // Start saving: show animation until data is saved
+  isSaving = true;
+  setSubmitState('saving');
+  showSavingOverlay(true);
+
+  const minShow = new Promise(r => setTimeout(r, 1800)); // keep animation visible long enough to read
+  const doSave = new Promise((resolve, reject) => {
+    try {
+      localStorage.setItem(SUBMIT_BASELINE_KEY, JSON.stringify(currentData));
+      localStorage.setItem('stallingDraft', JSON.stringify(currentData));
+      resolve();
+    } catch (err) { reject(err); }
   });
 
-  if (Object.keys(changedFields).length === 0) {
-    showMessage('No new changes to submit.', 'error');
-    return;
-  }
-
-  // Save only the newly entered/changed data as a downloadable JSON file.
-  const correctionPayload = {
-    correctionOf: currentData['reportDate'] || currentData['date'] || '',
-    submittedAt: new Date().toISOString(),
-    changedFields: changedFields
-  };
-  const blob = new Blob([JSON.stringify(correctionPayload, null, 2)], {type: 'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'StallCorrection_' + new Date().toISOString().split('T')[0] + '.json';
-  a.click();
-
-  // Update the baseline to the full current state so the next correction
-  // only captures whatever changes next.
-  localStorage.setItem(SUBMIT_BASELINE_KEY, JSON.stringify(currentData));
-  setSubmitButtonMode(true);
-  showSuccessAnimation('Correction Submitted');
+  Promise.all([doSave, minShow]).then(() => {
+    // Corrections also download only the changed fields
+    if (changedFields) {
+      const payload = {
+        correctionOf: currentData['reportDate'] || currentData['date'] || '',
+        submittedAt: new Date().toISOString(),
+        changedFields: changedFields
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'StallCorrection_' + new Date().toISOString().split('T')[0] + '.json';
+      a.click();
+    }
+    isSaving = false;
+    showSavingOverlay(false);
+    setSubmitState('submitted');
+    showSuccessAnimation('Data Saved');
+  }).catch(() => {
+    isSaving = false;
+    showSavingOverlay(false);
+    refreshSubmitState();
+    showMessage('Could not save data. Please try again.', 'error');
+  });
 }
 
 function previewSig(input) {
@@ -903,7 +1088,8 @@ function clearForm() {
   });
   localStorage.removeItem('stallingDraft');
   localStorage.removeItem(SUBMIT_BASELINE_KEY);
-  setSubmitButtonMode(false);
+  growAllTextareas();
+  refreshSubmitState();
   showMessage('Form cleared.', 'success');
 }
 
@@ -1118,8 +1304,8 @@ async function generatePDF() {
       });
     });
 
-    doc.save('Stalling_Analysis_'+new Date().toISOString().split('T')[0]+'.pdf');
-    showMessage('PDF generated and downloaded successfully!', 'success');
+    const pdfName = 'Stalling_Analysis_'+new Date().toISOString().split('T')[0]+'.pdf';
+    showPdfReady(doc.output('blob'), pdfName);
   };
 
   if (sig1File) {
